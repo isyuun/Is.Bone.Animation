@@ -8,7 +8,6 @@ public class CStoneCollision : _MonoBehaviour
 
     public void Hit(bool isNotPick) // ICollision 인터페이스 구현
     {
-        //Debug.Log("stone collision");
         //Debug.Log(this.GetMethodName() + ":" + isNotPick);
 
         if (isNotPick) return;

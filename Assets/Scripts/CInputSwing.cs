@@ -30,6 +30,10 @@ public class CInputSwing : _MonoBehaviour
             // 스윙 애니메이션을 실행 해라
             _animator.SetTrigger("Swing");
         }
+        else
+        {
+            _animator.ResetTrigger("Swing");
+        }
     }
 
     // 스윙 공격(타격) 애니메이션 이벤트
@@ -40,8 +44,7 @@ public class CInputSwing : _MonoBehaviour
 
         // 지정한 공격 타겟 레이어를 가진 오브젝트와 공격 포인트를 기준으로
         // 충돌 되었는지를 검출함
-        Collider2D hitCollision = Physics2D.OverlapCircle(
-            _attackPoint.position, 0.15f, _attackTargetMask);
+        Collider2D[] hitCollision = Physics2D.OverlapCircleAll(_attackPoint.position, 0.4f, _attackTargetMask);
 
         // 충돌되는 오브젝트가 없음
         if (hitCollision == null) return;
@@ -49,6 +52,10 @@ public class CInputSwing : _MonoBehaviour
         //Debug.Log(this.GetMethodName() + ":" + hitCollision + ":" + hitCollision.tag);
 
         // 개선3 : SendMessage(..)
-        hitCollision.SendMessage("Hit", _weaponChange._sword.activeSelf);
+        //hitCollision.SendMessage("Hit", _weaponChange._sword.activeSelf);
+        foreach (Collider2D item in hitCollision)
+        {
+            item.SendMessage("Hit", _weaponChange._sword.activeSelf);
+        }
     }
 }
